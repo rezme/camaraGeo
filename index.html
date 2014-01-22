@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click Pic & Geotag</title>
+ 
+    <script type="text/javascript" charset="utf-8" src="cordova-2.4.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+ 
+    var destinationType; // sets the format of returned value 
+ 
+    document.addEventListener("deviceready",onDeviceReady,false);
+ 
+    function onDeviceReady() 
+    {
+        destinationType=navigator.camera.DestinationType;
+    }
+ 
+    function captureCameraPic() {
+      // Take picture using device camera
+      navigator.camera.getPicture(onCameraPicSuccess, onCameraPicError, { quality: 80,
+        destinationType: destinationType.DATA_URL });
+    }
+ 
+    function onCameraPicSuccess (imgData) 
+   {
+      tempImg.src = "data:image/jpeg;base64," + imgData;
+ 
+      navigator.geolocation.getCurrentPosition(onGeoSuccess,onGeoError)
+    }
+ 
+ 
+    function onGeoSuccess(position)
+   {
+      drawCanvas(position.coords.latitude, position.coords.longitude);
+ 
+      // save canvas image as data 
+      var dataURL = canvas.toDataURL();
+ 
+      // set canvasImg image src to dataURL
+      // so it can be saved as an image
+      document.getElementById(taggedImage).src = dataURL;
+ 
+     taggedImage.style.display = ‘block’;
+   } 
+ 
+   function drawCanvas(latitude, longitude) 
+   {
+      var canvas = document.getElementById("canvasPnl");
+      var context = canvas.getContext('2d');
+      var locationtxt = “Latitude: ” + latitude + “, Longitude: ” + longitude;
+      context.fillText(locationtxt, 0, 0);
+   }
+ 
+ 
+   // Called if error occurs in getPicture function.
+   function onCameraPicError (errMsg) 
+   {
+        alert('Error capturing picture: ' + errMsg);
+   }
+ 
+   // Called if error occurs in getCurrentPosition function.
+  function onGeoError (errMsg) 
+  {
+      alert(‘Error retrieving location information: ' + errMsg);
+  }
+ 
+   function save() 
+   {
+      //Store image to local storage or upload to skydrive.	
+   }
+ 
+  </script>
+  </head>
+  <body>
+    <canvas id=”canvasPnl”>
+    <img style="display:none;" id=" tempImg " src="" />
+    <img style="display:none;width:80%;height:80%;" id="taggedImage" src="" />
+    <button onclick=" captureCameraPic ();">Take A Snap</button> <br>
+    <button onclick="save();">Save</button> <br>
+  </body>
+</html>
