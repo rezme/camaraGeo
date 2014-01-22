@@ -40,14 +40,14 @@
       // so it can be saved as an image
       document.getElementById(taggedImage).src = dataURL;
  
-     taggedImage.style.display = ‘block’;
+     taggedImage.style.display = 'block'';
    } 
  
    function drawCanvas(latitude, longitude) 
    {
       var canvas = document.getElementById("canvasPnl");
       var context = canvas.getContext('2d');
-      var locationtxt = “Latitude: ” + latitude + “, Longitude: ” + longitude;
+      var locationtxt = "Latitude: " + latitude + ", Longitude: " + longitude;
       context.fillText(locationtxt, 0, 0);
    }
  
@@ -61,21 +61,21 @@
    // Called if error occurs in getCurrentPosition function.
   function onGeoError (errMsg) 
   {
-      alert(‘Error retrieving location information: ' + errMsg);
+      alert('Error retrieving location information: nonono' + errMsg);
   }
  
-   function save() 
-   {
-      //Store image to local storage or upload to skydrive.	
-   }
+  function save() 
+  {
+      //Store image to local storage or upload to skydrive.        
+  }
  
   </script>
   </head>
   <body>
-    <canvas id=”canvasPnl”>
+    <canvas id="canvasPnl"></canvas>
     <img style="display:none;" id=" tempImg " src="" />
     <img style="display:none;width:80%;height:80%;" id="taggedImage" src="" />
-    <button onclick=" captureCameraPic ();">Take A Snap</button> <br>
+    <button onclick="captureCameraPic ();">Take A Snap</button> <br>
     <button onclick="save();">Save</button> <br>
   </body>
 </html>
